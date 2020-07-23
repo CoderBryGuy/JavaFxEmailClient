@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="351.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bryan.controller.LoginWindowController">
+   <children>
+      <Button fx:id="loginButton" layoutX="235.0" layoutY="225.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="64.0" prefWidth="131.0" text="Login">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Label fx:id="emailLabel" layoutX="24.0" layoutY="99.0" text="Email Address">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="passwordLabel" layoutX="24.0" layoutY="139.0" prefHeight="17.0" prefWidth="75.0" text="Password">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="emailAddressField" layoutX="155.0" layoutY="95.0" prefHeight="25.0" prefWidth="426.0" />
+      <PasswordField fx:id="passwordField" layoutX="155.0" layoutY="135.0" prefHeight="25.0" prefWidth="426.0" />
+      <Label fx:id="errorLabel" layoutX="286.0" layoutY="313.0" />
+   </children>
+</AnchorPane>
