@@ -2,13 +2,13 @@ package com.bryan.controller;
 
 import com.bryan.EmailManager;
 import com.bryan.view.ViewFactory;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.web.WebView;
 
 public class MainWindowController extends BaseController {
-
     @FXML
     private TreeView<?> emailsTreeView;
 
@@ -24,9 +24,7 @@ public class MainWindowController extends BaseController {
 
     @FXML
     void optionsAction(){
-
+        viewFactory.showOptionsWindow();
     }
-
-
 
 }

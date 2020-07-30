@@ -4,19 +4,38 @@ import com.bryan.EmailManager;
 import com.bryan.controller.BaseController;
 import com.bryan.controller.LoginWindowController;
 import com.bryan.controller.MainWindowController;
+import com.bryan.controller.OptionsWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ViewFactory {
 
     private EmailManager emailManager;
+    private ArrayList<Stage> activeStages;
+
+    //View options handling:
+    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+    private FontSize fontSize = FontSize.MEDIUM;
 
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
+        activeStages = new ArrayList<Stage>();
+    }
+
+
+
+    public ColorTheme getColorTheme() {
+        return colorTheme;
+    }
+
+    public FontSize getFontSize() {
+        return fontSize;
     }
 
     public void showLoginWindow(){
@@ -34,6 +53,14 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
+    public void showOptionsWindow(){
+        System.out.println("Show options window called");
+
+        BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        initializeStage(controller);
+
+    }
+
     private void initializeStage(BaseController baseController){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(baseController.getFxmlName()));
         fxmlLoader.setController(baseController);
@@ -49,5 +76,33 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
+
+        activeStages.add(stage);
+    }
+
+    public void closeStage(Stage stageToClose){
+        stageToClose.close();
+        activeStages.remove(stageToClose);
+    }
+
+    public void setFontSize(FontSize fontSize) {
+        this.fontSize = fontSize;
+    }
+
+    public void setColorTheme(ColorTheme value) {
+       this.colorTheme = value;
+    }
+
+    public void updateStyles() {
+        for (Stage stage : activeStages
+             ) {
+            Scene scene = stage.getScene();
+            scene.getStylesheets().clear();
+
+            System.out.println(ColorTheme.getCssPath(colorTheme).toString());
+
+            scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
+            scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
+        }
     }
 }
