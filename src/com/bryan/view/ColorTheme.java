@@ -8,11 +8,11 @@ public enum ColorTheme {
     public static String getCssPath(ColorTheme colorTheme){
         switch (colorTheme){
             case LIGHT:
-                return "css\\themeLight.css";
+                return "css/themeLight.css";
             case DEFAULT:
-                return "css\\themeDefault.css";
+                return "css/hemeDefault.css";
             case DARK: default:
-                return "css\\hemeDark.css";
+                return "css/emeDark.css";
 
           //  C:\Users\Bryan\IdeaProjects\Java\JavaFxEmailClient\src\com\bryan\view\css
         }
