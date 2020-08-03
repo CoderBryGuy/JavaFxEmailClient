@@ -12,7 +12,7 @@ public enum ColorTheme {
             case DEFAULT:
                 return "css\\themeDefault.css";
             case DARK: default:
-                return "css\\themeDark.css";
+                return "css\\hemeDark.css";
 
           //  C:\Users\Bryan\IdeaProjects\Java\JavaFxEmailClient\src\com\bryan\view\css
         }
