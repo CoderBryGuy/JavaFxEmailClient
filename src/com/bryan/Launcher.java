@@ -1,5 +1,6 @@
 package com.bryan;
 
+import com.bryan.view.ColorTheme;
 import com.bryan.view.ViewFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -10,7 +11,10 @@ public class Launcher extends Application {
     public void start(Stage stage) throws Exception{
 
         ViewFactory viewFactory = new ViewFactory(new EmailManager());
-        viewFactory.showLoginWindow();
+//        viewFactory.showLoginWindow();
+
+        viewFactory.showOptionsWindow();
+        viewFactory.updateStyles();
 
     }
 

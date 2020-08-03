@@ -8,7 +8,6 @@ import com.bryan.controller.OptionsWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class ViewFactory {
     private ArrayList<Stage> activeStages;
 
     //View options handling:
-    private ColorTheme colorTheme = ColorTheme.DEFAULT;
+    private ColorTheme colorTheme = ColorTheme.DARK;
     private FontSize fontSize = FontSize.MEDIUM;
 
     public ViewFactory(EmailManager emailManager) {

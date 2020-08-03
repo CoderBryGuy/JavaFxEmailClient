@@ -23,8 +23,14 @@ public class MainWindowController extends BaseController {
     }
 
     @FXML
+    void addAccountAction(){
+        viewFactory.showLoginWindow();
+    }
+
+    @FXML
     void optionsAction(){
-        viewFactory.showOptionsWindow();
+
+      viewFactory.showOptionsWindow(); //css not working
     }
 
 }
