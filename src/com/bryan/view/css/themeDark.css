@@ -20,6 +20,22 @@ Button:hover {
  -fx-background-color: #616c87;
 }
 
+TextField {
+-fx-background-color: #353b4a;
+}
+
+TextField:hover {
+-fx-background-color: #616c87;
+}
+
+PasswordField {
+-fx-background-color: #353b4a;
+}
+
+PasswordField:hover {
+-fx-background-color: #616c87;
+}
+
 ChoiceBox >* {
 
     -fx-background-color: #353b4a;
