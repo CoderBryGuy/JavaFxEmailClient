@@ -6,15 +6,18 @@ import com.bryan.model.EmailAccount;
 import com.bryan.view.ViewFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import static com.bryan.controller.EmailLoginResult.SUCCESS;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginWindowController extends BaseController {
+
+public class LoginWindowController extends BaseController implements Initializable {
     @FXML
     private Button loginButton;
 
@@ -38,22 +41,34 @@ public class LoginWindowController extends BaseController {
     }
 
     @FXML
-    public void loginButtonAction() {
+    void loginButtonAction() {
+
         if(fieldsAreValid()) {
-            EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(),
-                    passwordField.getText());
+            EmailAccount emailAccount = new EmailAccount(emailAddressField.getText(), passwordField.getText());
             LoginService loginService = new LoginService(emailAccount, emailManager);
-            EmailLoginResult emailLoginResult = loginService.login();
+            loginService.start();
+            loginService.setOnSucceeded(event->{
+                EmailLoginResult emailLoginResult = loginService.getValue();
+                System.out.println("is this working");
+                switch (emailLoginResult){
+                    case SUCCESS:
+                        System.out.println("login successful!!!" + emailAccount);
+                        System.out.println("loginButtonAction!!!");
+                        viewFactory.showMainWindow();
+                        Stage stage = (Stage) errorLabel.getScene().getWindow();
+                        viewFactory.closeStage(stage);
+                        return;
+                    case FAILED_BY_CREDENTIALS:
+                        errorLabel.setText("invalid credentials");
+                        return;
+                    case FAILED_BY_UNEXPECTED_ERROR:
+                        errorLabel.setText("unexpected error!");
+                        return;
+                    default:
+                        return;
+                }
 
-            switch (emailLoginResult){
-                case SUCCESS:
-                    System.out.println("login successful!!!" + emailAccount);
-
-            }
-            System.out.println("loginButtonAction!!!");
-            viewFactory.showMainWindow();
-            Stage stage = (Stage) errorLabel.getScene().getWindow();
-            viewFactory.closeStage(stage);
+            });
         }
     }
 
@@ -68,5 +83,11 @@ public class LoginWindowController extends BaseController {
         }
 
         return true;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        emailAddressField.setText("donnyzeevhatsuf@gmail.com");
+        passwordField.setText("M@zzini1848");
     }
 }
