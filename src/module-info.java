@@ -7,7 +7,9 @@ module JavaFxEmailClient {
     requires java.mail;
 
 
+
     opens com.bryan;
     opens com.bryan.view;
     opens com.bryan.controller;
+    opens com.bryan.model;
 }

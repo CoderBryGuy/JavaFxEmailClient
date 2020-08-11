@@ -12,6 +12,7 @@ public class EmailMessage {
     private SimpleStringProperty sender;
     private SimpleStringProperty recipient;
     private SimpleIntegerProperty size;
+
     private SimpleObjectProperty<Date> date;
     private boolean isRead;
     private Message message;
@@ -21,9 +22,38 @@ public class EmailMessage {
         this.sender = new SimpleStringProperty(sender);
         this.recipient = new SimpleStringProperty(recipient);
         this.size = new SimpleIntegerProperty(size);
-        this.date = new SimpleObjectProperty<Date>();
+        this.date = new SimpleObjectProperty<>(date);
         this.isRead  = isRead;
         this.message = message;
     }
+
+    public String getSubject(){
+        return this.subject.get();
+    }
+
+    public String getSender(){
+        return this.sender.get();
+    }
+
+    public String getRecipient(){
+        return this.recipient.getName();
+    }
+
+    public Integer getSize(){
+        return this.size.get();
+    }
+
+    public boolean isRead(){
+        return isRead;
+    }
+
+    public void setRead(boolean read){
+        isRead = read;
+    }
+
+    public Message getMessage(){
+        return this.message;
+    }
+
     }
 
