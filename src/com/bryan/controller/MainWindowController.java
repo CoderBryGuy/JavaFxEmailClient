@@ -1,16 +1,20 @@
 package com.bryan.controller;
 
 import com.bryan.EmailManager;
+import com.bryan.controller.services.MessageRendererService;
 import com.bryan.model.EmailMessage;
 import com.bryan.model.EmailTreeItem;
+import com.bryan.model.SizeInteger;
 import com.bryan.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebView;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.Date;
@@ -30,12 +34,14 @@ public class MainWindowController extends BaseController implements Initializabl
     @FXML
     private TableColumn<EmailMessage, String>  recipientCol;
     @FXML
-    private TableColumn<EmailMessage, Integer> sizeCol;
+    private TableColumn<EmailMessage, SizeInteger> sizeCol;
     @FXML
     private TableColumn<EmailMessage, Date>  dateCol;
 
     @FXML
     private WebView emailWebView;
+
+    private MessageRendererService messageRendererService;
 
 
 
@@ -59,6 +65,44 @@ public class MainWindowController extends BaseController implements Initializabl
         setUpEmailsTreeView();
         setUpEmailsTableView();
         setUpFolderSelection();
+        setUpBoldRows();
+        setUpMessageRendererService();
+        setUpMessageSelection();
+    }
+
+    private void setUpMessageSelection() {
+        emailsTableView.setOnMouseClicked(e->{
+            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
+            if(emailMessage != null){
+                messageRendererService.setEmailMessage(emailMessage);
+                messageRendererService.restart();
+            }
+        });
+    }
+
+    private void setUpMessageRendererService() {
+        messageRendererService = new MessageRendererService(emailWebView.getEngine());
+    }
+
+    private void setUpBoldRows() {
+        emailsTableView.setRowFactory(new Callback<TableView<EmailMessage>, TableRow<EmailMessage>>() {
+            @Override
+            public TableRow<EmailMessage> call(TableView<EmailMessage> emailMessageTableView) {
+                return new TableRow<EmailMessage>(){
+                    @Override
+                    protected void updateItem(EmailMessage item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(item != null){
+                            if(item.isRead()){
+                                setStyle("");
+                            }else {
+                                setStyle("-fx-font-weight: bold");
+                            }
+                        }
+                    }
+                };
+            }
+        });
     }
 
     private void setUpFolderSelection() {
@@ -74,7 +118,7 @@ public class MainWindowController extends BaseController implements Initializabl
         senderCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, String>("sender"));
         subjectCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, String>("subject"));
         recipientCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, String>("recipient"));
-        sizeCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, Integer>("size"));
+        sizeCol.setCellValueFactory(new PropertyValueFactory<EmailMessage, SizeInteger>("size"));
         dateCol.setCellValueFactory(new PropertyValueFactory<EmailMessage,Date>("date"));
 
     }
