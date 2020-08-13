@@ -60,6 +60,11 @@ public class MainWindowController extends BaseController implements Initializabl
       viewFactory.showOptionsWindow(); //css not working
     }
 
+    @FXML
+    void composeMessageAction(){
+        viewFactory.showComposeMessageWindow();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setUpEmailsTreeView();
@@ -109,6 +114,7 @@ public class MainWindowController extends BaseController implements Initializabl
         emailsTreeView.setOnMouseClicked(e -> {
             EmailTreeItem<String> item = (EmailTreeItem<String>) emailsTreeView.getSelectionModel().getSelectedItem();
             if(item != null){
+
                 emailsTableView.setItems(item.getEmailMessages());
             }
         });

@@ -1,10 +1,7 @@
 package com.bryan.view;
 
 import com.bryan.EmailManager;
-import com.bryan.controller.BaseController;
-import com.bryan.controller.LoginWindowController;
-import com.bryan.controller.MainWindowController;
-import com.bryan.controller.OptionsWindowController;
+import com.bryan.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -55,6 +52,15 @@ public class ViewFactory {
         initializeStage(controller);
         mainViewInitialized = true;
     }
+
+    public void showComposeMessageWindow(){
+        System.out.println("Show compose message window called");
+
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
+        initializeStage(controller);
+        mainViewInitialized = true;
+    }
+
 
     public void showOptionsWindow(){
         System.out.println("Show options window called");

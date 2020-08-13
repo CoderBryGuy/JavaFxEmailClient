@@ -46,4 +46,13 @@ public class EmailAccount {
     public void setStore(Store store) {
         this.store = store;
     }
+
+    public EmailAccount() {
+        super();
+    }
+
+    @Override
+    public String toString() {
+        return address;
+    }
 }
