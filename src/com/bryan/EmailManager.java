@@ -4,9 +4,9 @@ import com.bryan.controller.services.FetchFoldersService;
 import com.bryan.model.EmailAccount;
 import com.bryan.model.EmailMessage;
 import com.bryan.model.EmailTreeItem;
+import com.bryan.view.IconResolver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
 
 public class EmailManager {
 
@@ -14,6 +14,7 @@ public class EmailManager {
     private EmailMessage selectedMessage;
     private EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
     private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
+    private IconResolver iconResolver = new IconResolver();
 
     public EmailMessage getSelectedMessage() {
         return selectedMessage;
@@ -38,6 +39,7 @@ public class EmailManager {
     public void addEmailAccount(EmailAccount emailAccount){
         emailAccounts.add(emailAccount);
         EmailTreeItem<String> treeItem = new EmailTreeItem<>(emailAccount.getAddress());
+        treeItem.setGraphic(iconResolver.getIconFolder(emailAccount.getAddress()));
         FetchFoldersService fetchFoldersService = new FetchFoldersService(emailAccount.getStore(), treeItem);
         fetchFoldersService.start();
         foldersRoot.getChildren().add(treeItem);
