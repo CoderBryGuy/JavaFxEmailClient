@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="JavaFxEmailClient">
+    <output-path>$PROJECT_DIR$/out/artifacts/JavaFxEmailClient</output-path>
+    <root id="root">
+      <element id="archive" name="JavaFxEmailClient.jar">
+        <element id="module-output" name="JavaFxEmailClient" />
+      </element>
+      <element id="library" level="application" name="JavaFX - 11" />
+      <element id="library" level="project" name="javax.mail" />
+      <element id="library" level="project" name="activation" />
+    </root>
+  </artifact>
+</component>
