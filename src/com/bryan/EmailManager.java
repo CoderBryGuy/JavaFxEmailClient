@@ -8,14 +8,27 @@ import com.bryan.view.IconResolver;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.mail.Flags;
+
 public class EmailManager {
 
     //folder manager
     private EmailMessage selectedMessage;
+    private EmailTreeItem<String> selectedFolder;
     private EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
     private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
     private IconResolver iconResolver = new IconResolver();
 
+
+
+
+    public void setSelectedFolder(EmailTreeItem<String> selectedFolder) {
+        this.selectedFolder = selectedFolder;
+    }
+
+    public EmailTreeItem<String> getSelectedFolder() {
+        return selectedFolder;
+    }
     public EmailMessage getSelectedMessage() {
         return selectedMessage;
     }
@@ -45,4 +58,34 @@ public class EmailManager {
         foldersRoot.getChildren().add(treeItem);
 
     }
+
+    public void setRead() {
+        try {
+            selectedMessage.setRead(true);
+            selectedMessage.getMessage().setFlag(Flags.Flag.SEEN, true);
+            selectedFolder.decrementMessagesCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setUnRead() {
+        try {
+            selectedMessage.setRead(false);
+            selectedMessage.getMessage().setFlag(Flags.Flag.SEEN, false);
+            selectedFolder.incrementMessagesCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteSelectedMessage() {
+        try {
+            selectedMessage.getMessage().setFlag(Flags.Flag.DELETED, true);
+            selectedFolder.getEmailMessages().remove(selectedMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
+
