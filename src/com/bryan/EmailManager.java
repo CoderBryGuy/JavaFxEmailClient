@@ -1,6 +1,7 @@
 package com.bryan;
 
 import com.bryan.controller.services.FetchFoldersService;
+import com.bryan.controller.services.FolderUpdaterService;
 import com.bryan.model.EmailAccount;
 import com.bryan.model.EmailMessage;
 import com.bryan.model.EmailTreeItem;
@@ -9,18 +10,32 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javax.mail.Flags;
+import javax.mail.Folder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmailManager {
+
+    private FolderUpdaterService folderUpdaterService;
 
     //folder manager
     private EmailMessage selectedMessage;
     private EmailTreeItem<String> selectedFolder;
+
     private EmailTreeItem<String> foldersRoot = new EmailTreeItem<>("");
     private ObservableList<EmailAccount> emailAccounts = FXCollections.observableArrayList();
     private IconResolver iconResolver = new IconResolver();
 
+    private List<Folder> folderList = new ArrayList<>();
 
+    public List<Folder> getFolderList() {
+        return folderList;
+    }
 
+    public EmailManager() {
+        folderUpdaterService = new FolderUpdaterService(folderList);
+        folderUpdaterService.start();
+    }
 
     public void setSelectedFolder(EmailTreeItem<String> selectedFolder) {
         this.selectedFolder = selectedFolder;
@@ -53,7 +68,7 @@ public class EmailManager {
         emailAccounts.add(emailAccount);
         EmailTreeItem<String> treeItem = new EmailTreeItem<>(emailAccount.getAddress());
         treeItem.setGraphic(iconResolver.getIconFolder(emailAccount.getAddress()));
-        FetchFoldersService fetchFoldersService = new FetchFoldersService(emailAccount.getStore(), treeItem);
+        FetchFoldersService fetchFoldersService = new FetchFoldersService(emailAccount.getStore(), treeItem, folderList);
         fetchFoldersService.start();
         foldersRoot.getChildren().add(treeItem);
 

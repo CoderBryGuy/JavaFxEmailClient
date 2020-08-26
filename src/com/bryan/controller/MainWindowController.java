@@ -19,8 +19,6 @@ import java.util.ResourceBundle;
 
 public class MainWindowController extends BaseController implements Initializable {
 
-
-
     @FXML
     private TreeView<String> emailsTreeView;
 
@@ -93,15 +91,6 @@ public class MainWindowController extends BaseController implements Initializabl
         });
     }
 
-//    private void setUpMessageSelection() {
-//        emailsTableView.setOnMouseClicked(e->{
-//            EmailMessage emailMessage = emailsTableView.getSelectionModel().getSelectedItem();
-//            if(emailMessage != null){
-//                messageRendererService.setEmailMessage(emailMessage);
-//                messageRendererService.restart();
-//            }
-//        });
-//    }
 
     private void setUpMessageSelection() {
         emailsTableView.setOnMouseClicked(event -> {
