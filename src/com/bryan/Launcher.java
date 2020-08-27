@@ -33,7 +33,7 @@ public class Launcher extends Application {
             viewFactory.showLoginWindow();
         }
 
-        viewFactory.updateStyles();
+       viewFactory.updateStyles();
     }
 
 
